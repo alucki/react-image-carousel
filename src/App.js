@@ -1,24 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Slider from "./components/slider";
+import gilmore1 from "./images/gilmores1.jpeg";
+import gilmore2 from "./images/gilmores1.jpeg";
+import gilmore3 from "./images/gilmores1.jpeg";
+import gilmore4 from "./images/gilmores1.jpeg";
+import gilmore5 from "./images/gilmores1.jpeg";
 
 function App() {
+  const images = [gilmore1, gilmore2, gilmore3, gilmore4, gilmore5];
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>React Image Carousel</h1>
+      <Slider slides={images} />
     </div>
   );
 }
