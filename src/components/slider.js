@@ -5,9 +5,6 @@ import { Slide } from "./slide";
 import { LeftArrow, RightArrow } from "./arrow";
 
 const Slider = ({ slides }) => {
-  // change this to use ref?
-  // const getWidth = () => window.innerWidth;
-
   const [state, setState] = useState({
     activeIndex: 0,
     translate: 0,
@@ -28,7 +25,7 @@ const Slider = ({ slides }) => {
     setState({
       ...state,
       activeIndex: activeIndex + 1,
-      translate: (activeIndex + 1) * 320,
+      translate: (activeIndex + 1) * 300,
     });
   };
 
@@ -36,7 +33,7 @@ const Slider = ({ slides }) => {
     if (activeIndex === 0) {
       return setState({
         ...state,
-        translate: (slides.length - 1) * 320,
+        translate: (slides.length - 1) * 300,
         activeIndex: slides.length - 1,
       });
     }
@@ -44,7 +41,7 @@ const Slider = ({ slides }) => {
     setState({
       ...state,
       activeIndex: activeIndex - 1,
-      translate: (activeIndex - 1) * 320,
+      translate: (activeIndex - 1) * 300,
     });
   };
 
@@ -55,7 +52,7 @@ const Slider = ({ slides }) => {
       <SliderContent
         translate={translate}
         transition={transition}
-        width={320 * slides.length}
+        width={300 * slides.length}
       >
         {slides.map((slide, i) => (
           <Slide key={slide + i} content={slide} />

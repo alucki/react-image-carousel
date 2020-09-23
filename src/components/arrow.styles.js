@@ -20,11 +20,11 @@ const sharedArrowStyles = css`
 export const ArrowLeftWrapper = styled("div")`
   ${sharedArrowStyles}
 
-  left: 5%;
+  left: 2%;
 `;
 
 export const ArrowRightWrapper = styled("div")`
   ${sharedArrowStyles}
 
-  right: 5%;
+  right: 2%;
 `;
