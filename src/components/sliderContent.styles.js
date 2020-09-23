@@ -6,4 +6,10 @@ export const SliderContent = styled("div")`
   height: 100%;
   width: ${(props) => props.width}px;
   display: flex;
+
+  img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+  }
 `;
