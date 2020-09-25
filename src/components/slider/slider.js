@@ -14,11 +14,11 @@ const Slider = ({ slides }) => {
 
   const [slideWidth, setSlideWidth] = useState();
 
-  // translate value needs to be slideWidth on initialization
+  // translate value needs to be slideWidth on initialization, ie 300
   const [state, setState] = useState({
     activeSlide: 0,
-    translate: slideWidth,
-    transition: 0.45,
+    translate: 300,
+    transition: 0,
     _slides: [lastSlide, firstSlide, secondSlide],
   });
 
@@ -51,12 +51,9 @@ const Slider = ({ slides }) => {
   const smoothTransition = () => {
     let _slides = [];
 
-    // We're at the last slide.
     if (activeSlide === slides.length - 1)
       _slides = [slides[slides.length - 2], lastSlide, firstSlide];
-    // We're back at the first slide. Just reset to how it was on initial render
     else if (activeSlide === 0) _slides = [lastSlide, firstSlide, secondSlide];
-    // Create an array of the previous last slide, and the next two slides that follow it.
     else _slides = slides.slice(activeSlide - 1, activeSlide + 2);
 
     setState({
