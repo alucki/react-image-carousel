@@ -5,51 +5,81 @@ import { Slide } from "../slide/slide";
 import { LeftArrow, RightArrow } from "../arrow/arrow";
 
 const Slider = ({ slides }) => {
+  const firstSlide = slides[0];
+  const secondSlide = slides[1];
+  const lastSlide = slides[slides.length - 1];
+
   const slideWidthRef = useRef();
+  const transitionRef = useRef();
 
   const [slideWidth, setSlideWidth] = useState();
 
+  // translate value needs to be slideWidth on initialization
   const [state, setState] = useState({
-    activeIndex: 0,
-    translate: 0,
+    activeSlide: 0,
+    translate: slideWidth,
     transition: 0.45,
+    _slides: [lastSlide, firstSlide, secondSlide],
   });
+
+  const { translate, transition, activeSlide, _slides } = state;
 
   useEffect(() => {
     setSlideWidth(slideWidthRef.current.clientWidth);
   }, []);
 
-  const { translate, transition, activeIndex } = state;
+  useEffect(() => {
+    transitionRef.current = smoothTransition;
+  });
 
-  const nextSlide = () => {
-    if (activeIndex === slides.length - 1) {
-      return setState({
-        ...state,
-        translate: 0,
-        activeIndex: 0,
-      });
-    }
+  useEffect(() => {
+    const smooth = () => {
+      transitionRef.current();
+    };
+
+    const transitionEnd = window.addEventListener("transitionend", smooth);
+
+    return () => {
+      window.removeEventListener("transitionend", transitionEnd);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (transition === 0) setState({ ...state, transition: 0.45 });
+  }, [state, transition]);
+
+  const smoothTransition = () => {
+    let _slides = [];
+
+    // We're at the last slide.
+    if (activeSlide === slides.length - 1)
+      _slides = [slides[slides.length - 2], lastSlide, firstSlide];
+    // We're back at the first slide. Just reset to how it was on initial render
+    else if (activeSlide === 0) _slides = [lastSlide, firstSlide, secondSlide];
+    // Create an array of the previous last slide, and the next two slides that follow it.
+    else _slides = slides.slice(activeSlide - 1, activeSlide + 2);
 
     setState({
       ...state,
-      activeIndex: activeIndex + 1,
-      translate: (activeIndex + 1) * slideWidth,
+      _slides,
+      transition: 0,
+      translate: slideWidth,
+    });
+  };
+
+  const nextSlide = () => {
+    setState({
+      ...state,
+      translate: translate + slideWidth,
+      activeSlide: activeSlide === slides.length - 1 ? 0 : activeSlide + 1,
     });
   };
 
   const prevSlide = () => {
-    if (activeIndex === 0) {
-      return setState({
-        ...state,
-        translate: (slides.length - 1) * slideWidth,
-        activeIndex: slides.length - 1,
-      });
-    }
-
     setState({
       ...state,
-      activeIndex: activeIndex - 1,
-      translate: (activeIndex - 1) * slideWidth,
+      translate: 0,
+      activeSlide: activeSlide === 0 ? slides.length - 1 : activeSlide - 1,
     });
   };
 
@@ -60,10 +90,10 @@ const Slider = ({ slides }) => {
       <SliderContent
         translate={translate}
         transition={transition}
-        width={slideWidth && slideWidth * slides.length}
+        width={slideWidth && slideWidth * _slides.length}
       >
-        {slides.map((slide, i) => (
-          <Slide ref={slideWidthRef} key={slide + i} content={slide} />
+        {_slides.map((_slide, i) => (
+          <Slide ref={slideWidthRef} key={_slide + i} content={_slide} />
         ))}
       </SliderContent>
     </SliderContainer>
