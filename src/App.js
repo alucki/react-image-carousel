@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Slider from "./components/slider";
+import Slider from "./components/slider/slider";
 import gilmore1 from "./images/gilmores1.jpeg";
 import gilmore2 from "./images/gilmores2.jpeg";
 import gilmore3 from "./images/gilmores3.jpeg";

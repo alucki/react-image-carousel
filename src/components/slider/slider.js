@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { SliderContainer } from "./slider.styles.js";
 import { SliderContent } from "./sliderContent.styles";
-import { Slide } from "./slide";
-import { LeftArrow, RightArrow } from "./arrow";
+import { Slide } from "../slide/slide";
+import { LeftArrow, RightArrow } from "../arrow/arrow";
 
 const Slider = ({ slides }) => {
   const slideWidthRef = useRef();
