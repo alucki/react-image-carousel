@@ -1,7 +1,8 @@
 import React from "react";
+import { SlideContainer } from "./slide.styles";
 
 export const Slide = React.forwardRef((props, ref) => (
-  <div ref={ref} style={{ height: "auto", width: "100%" }}>
+  <SlideContainer ref={ref}>
     <img src={props.content} alt="gilmores" />
-  </div>
+  </SlideContainer>
 ));
